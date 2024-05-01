@@ -1,0 +1,46 @@
+<table class="table table-striped">
+  <thead>
+    <th>Device ID</th>
+    <th>Event date</th>
+    <th>Event type</th>
+    <th></th>
+  </thead>
+  <tbody>
+    <tr *ngFor="let deviceEvent of deviceEvents; let i = index">
+      <td>{{ deviceEvent.deviceId }}</td>
+      <td>{{ presentDate(deviceEvent.eventDate) }}</td>
+      <td>{{ deviceEvent.type }}</td>
+      <td>
+        <button 
+          (click)="selectedEvent = deviceEvent"
+          class="btn btn-primary" 
+          data-bs-toggle="modal" 
+          data-bs-target="#detailsModal"
+        >
+          Details
+        </button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="modal fade" id="detailsModal" tabindex="-1" aria-labelledby="detailsModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="detailsModalLabel">
+          Device event
+        </h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p>Device id: {{ selectedEvent.deviceId || null }}</p>
+        <p>Event date: {{ selectedEvent.eventDate ? presentDate(selectedEvent.eventDate) : null }}</p>
+        <p>Type: {{ selectedEvent.type || null }}</p>
+        <p *ngFor="let data of selectedEvent.evtData | keyvalue">
+          {{ data.key }}: {{ data.value }}
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
